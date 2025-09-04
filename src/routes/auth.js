@@ -113,32 +113,32 @@ export default async function routes(fastify) {
   });
 
   fastify.get('/api/verify', async (request, reply) => {
-    const { token } = request.query;
+  const { token } = request.query;
 
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      if (decoded.token_type !== 'signup') {
-        return reply.code(400).send({ error: 'Invalid token type.' });
-      }
-
-      const user = await User.findOne({ where: { email: decoded.email } });
-      if (!user) {
-        return reply.code(404).send({ error: 'User not found.' });
-      }
-
-      await user.update({ isVerified: true, verificationToken: null });
-      const sessionToken = jwt.sign(
-        { userId: user.id, email: user.email },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h', jwtid: uuidv4() }
-      );
-
-      return reply.code(200).send({ token: sessionToken, redirect: '/mybusiness' });
-    } catch (error) {
-      console.error(error);
-      return reply.code(400).send({ error: 'Invalid or expired token.' });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (decoded.token_type !== 'signup') {
+      return reply.code(400).send({ error: 'Invalid token type.' });
     }
-  });
+
+    const user = await User.findOne({ where: { email: decoded.email } });
+    if (!user) {
+      return reply.code(404).send({ error: 'User not found.' });
+    }
+
+    await user.update({ isVerified: true, verificationToken: null });
+    const sessionToken = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h', jwtid: uuidv4() }
+    );
+
+    return reply.code(200).send({ token: sessionToken, redirect: '/select-language' });
+  } catch (error) {
+    console.error(error);
+    return reply.code(400).send({ error: 'Invalid or expired token.' });
+  }
+});
 
   fastify.get('/api/mybusiness', { preHandler: [fastify.authenticate] }, async (request, reply) => {
     try {
