@@ -105,7 +105,7 @@ export default async function routes(fastify) {
         { expiresIn: '1h', jwtid: uuidv4() }
       );
 
-      return reply.code(200).send({ token, redirect: '/mybusiness' });
+      return reply.code(200).send({ token, redirect: '/select-language' });
     } catch (error) {
       console.error(error);
       return reply.code(500).send({ error: 'Internal server error.' });
