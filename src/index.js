@@ -15,9 +15,10 @@ const fastify = Fastify({ logger: true });
 fastify.decorate('authenticate', authMiddleware);
 
 fastify.register(fastifyCors, {
-  origin: ['http://localhost:3000', 'https://one23fakturera-frontend.vercel.app'], // Cập nhật origin cho frontend
+  origin: process.env.NODE_ENV === 'development' ? '*' : ['https://one23fakturera-frontend.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 });
 
 fastify.register(pagesRoutes);
@@ -25,7 +26,6 @@ fastify.register(termsRoutes);
 fastify.register(productsRoutes);
 fastify.register(authRoutes);
 
-// Thêm route mặc định cho HEAD request
 fastify.head('/', async (request, reply) => {
   reply.status(200).send();
 });
@@ -33,7 +33,7 @@ fastify.head('/', async (request, reply) => {
 const start = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: false });
     console.log('Database connected');
     await fastify.listen({ port: process.env.PORT || 3001, host: '0.0.0.0' });
     console.log(`Server running on port ${process.env.PORT || 3001}`);
