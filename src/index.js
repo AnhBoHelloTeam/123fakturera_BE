@@ -15,7 +15,7 @@ const fastify = Fastify({ logger: true });
 fastify.decorate('authenticate', authMiddleware);
 
 fastify.register(fastifyCors, {
-  origin: true,
+  origin: ['http://localhost:3000', 'https://one23fakturera-fe.onrender.com'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 });
