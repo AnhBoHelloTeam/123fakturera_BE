@@ -16,6 +16,11 @@ const Product = sequelize.define('Product', {
       key: 'id',
     },
   },
+  article_no: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -32,12 +37,12 @@ const Product = sequelize.define('Product', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  vat_rate: {
+  in_stock: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  quantity: {
-    type: DataTypes.INTEGER,
+  description: {
+    type: DataTypes.TEXT,
     allowNull: true,
   },
   created_at: {
