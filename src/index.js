@@ -15,7 +15,7 @@ const fastify = Fastify({ logger: true });
 fastify.decorate('authenticate', authMiddleware);
 
 fastify.register(fastifyCors, {
-  origin: ['http://localhost:3000', 'https://one23fakturera-frontend.vercel.app'], // Cập nhật origin cho frontend
+  origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 });
