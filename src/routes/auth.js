@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from 'dotenv';
 
-dotenv.config(); // Đảm bảo load biến môi trường
+dotenv.config();
 
 export default async function routes(fastify) {
   const transporter = nodemailer.createTransport({
@@ -31,7 +31,7 @@ export default async function routes(fastify) {
 
       const verificationToken = uuidv4();
       const token = jwt.sign(
-        { email, companyName, address, postNumber, city, mobile, token_type: 'signup', password },
+        { email, companyName, address, postNumber, city, mobile, token_type: 'signup' },
         process.env.JWT_SECRET,
         { expiresIn: '48h', jwtid: uuidv4() }
       );
@@ -48,7 +48,7 @@ export default async function routes(fastify) {
         verificationToken,
       });
 
-      // Sử dụng BASE_URL từ biến môi trường
+      // Sử dụng BASE_URL trỏ đến frontend
       const verificationLink = `${process.env.BASE_URL}/verify?token=${token}`;
       const mailOptions = {
         from: '"LättFaktura" <' + process.env.EMAIL_USER + '>',
@@ -59,9 +59,8 @@ export default async function routes(fastify) {
           <p>Kul att du har registrerat dig för att använda 123 Fakturera.</p>
           <p>Vänligen klicka på knappen nedan för att bekräfta din e-post:</p>
           <a href="${verificationLink}" style="display: inline-block; padding: 10px 20px; background-color: #07a31f; color: white; text-decoration: none; border-radius: 5px;">Bekräfta din epost</a>
-          <p>Du kan också klicka på länken nedan eller kopiera och klistra in den i din webbläsare för att logga in direkt:</p>
+          <p>Du kan också klicka trên liên kết này hoặc sao chép và dán vào trình duyệt của bạn:</p>
           <p><a href="${verificationLink}">${verificationLink}</a></p>
-          <p>Ditt lösenord är: ${password}</p>
           <p>Igen, tack för att du registrerade dig och kontakta oss gärna om du behöver hjälp med något.</p>
           <p><img src="https://storage.123fakturera.se/public/icons/diamond.png" alt="LättFaktura" style="width: 50px;"></p>
           <p><strong>LättFaktura !</strong></p>
@@ -179,7 +178,6 @@ export default async function routes(fastify) {
 
       const { companyName, contactPerson, address, address2, postNumber, city, mobile, email, accountNumber, orgNumber, homepage } = request.body;
 
-      // Validate email uniqueness if changed
       if (email && email !== user.email) {
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
