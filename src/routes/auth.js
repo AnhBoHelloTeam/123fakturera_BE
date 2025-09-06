@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import { v4 as uuidv4 } from 'uuid';
+import dotenv from 'dotenv';
+
+dotenv.config(); // Đảm bảo load biến môi trường
 
 export default async function routes(fastify) {
   const transporter = nodemailer.createTransport({
@@ -45,7 +48,8 @@ export default async function routes(fastify) {
         verificationToken,
       });
 
-      const verificationLink = `http://localhost:3000/verify?token=${token}`;
+      // Sử dụng BASE_URL từ biến môi trường
+      const verificationLink = `${process.env.BASE_URL}/verify?token=${token}`;
       const mailOptions = {
         from: '"LättFaktura" <' + process.env.EMAIL_USER + '>',
         to: email,
