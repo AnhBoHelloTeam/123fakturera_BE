@@ -48,8 +48,8 @@ export default async function routes(fastify) {
         verificationToken,
       });
 
-      // Sử dụng BASE_URL trỏ đến frontend
-      const verificationLink = `${process.env.BASE_URL}/verify?token=${token}`;
+      // Sửa link để loại bỏ dấu // thừa
+      const verificationLink = `${process.env.BASE_URL}verify?token=${token}`;
       const mailOptions = {
         from: '"LättFaktura" <' + process.env.EMAIL_USER + '>',
         to: email,
@@ -57,7 +57,7 @@ export default async function routes(fastify) {
         html: `
           <p>Hej.</p>
           <p>Kul att du har registrerat dig för att använda 123 Fakturera.</p>
-          <p>Vänligen klicka på knappen nedan för att bekräfta din e-post:</p>
+          <p>Vänligen klicka trên knappen nedan för att bekräfta din e-post:</p>
           <a href="${verificationLink}" style="display: inline-block; padding: 10px 20px; background-color: #07a31f; color: white; text-decoration: none; border-radius: 5px;">Bekräfta din epost</a>
           <p>Du kan också klicka trên liên kết này hoặc sao chép và dán vào trình duyệt của bạn:</p>
           <p><a href="${verificationLink}">${verificationLink}</a></p>
