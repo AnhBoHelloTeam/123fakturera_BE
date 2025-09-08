@@ -51,7 +51,7 @@ export default async function routes(fastify) {
       // Sửa link để loại bỏ dấu // thừa
       const verificationLink = `${process.env.BASE_URL}verify?token=${token}`;
       const mailOptions = {
-        from: '"LättFaktura" <' + process.env.EMAIL_USER + '>',
+        from: '"Nguyễn Thành Nhân" <' + process.env.EMAIL_USER + '>',
         to: email,
         subject: 'Välkommen till 123 Fakturera - Bekräfta din e-post',
         html: `
