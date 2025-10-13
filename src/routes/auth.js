@@ -105,7 +105,7 @@ export default async function routes(fastify) {
         { expiresIn: '1h', jwtid: uuidv4() }
       );
 
-      return reply.code(200).send({ token, redirect: '/select-language' });
+      return reply.code(200).send({ token, redirect: '/price-list' });
     } catch (error) {
       console.error(error);
       return reply.code(500).send({ error: 'Internal server error.' });
@@ -134,7 +134,7 @@ export default async function routes(fastify) {
         { expiresIn: '1h', jwtid: uuidv4() }
       );
 
-      return reply.code(200).send({ token: sessionToken, redirect: '/select-language' });
+      return reply.code(200).send({ token: sessionToken, redirect: '/price-list' });
     } catch (error) {
       console.error(error);
       return reply.code(400).send({ error: 'Invalid or expired token.' });
