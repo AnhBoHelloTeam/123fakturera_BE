@@ -8,7 +8,8 @@
           "dev": "nodemon src/index.js",
           "seed": "node seed-database.js",
           "seed:supabase": "node seed-to-supabase.js",
-          "seed:legacy": "node seeders/index.js"
+          "seed:legacy": "node seeders/index.js",
+          "push:all": "powershell -ExecutionPolicy Bypass -File push-all.ps1"
      },
      "dependencies": {
           "@fastify/cors": "^11.1.0",
