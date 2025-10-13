@@ -1,13 +1,10 @@
 import Term from '../src/models/term.js';
 
-export const seedTerms = async () => {
+export const up = async () => {
   try {
-    // Check if terms already exist
-    const existingTerms = await Term.findAll();
-    if (existingTerms.length > 0) {
-      console.log('Terms already exist, skipping seeding...');
-      return;
-    }
+    // Clear existing terms first
+    await Term.destroy({ where: {} });
+    console.log('Cleared existing terms...');
 
     // English terms
     await Term.create({
@@ -83,4 +80,8 @@ export const seedTerms = async () => {
   } catch (error) {
     console.error('Error seeding terms:', error);
   }
+};
+
+export const down = async () => {
+  await Term.destroy({ where: { language: ['en', 'sv'] } });
 };
