@@ -1,14 +1,11 @@
 import Product from '../src/models/product.js';
 import User from '../src/models/User.js';
 
-export const seedProducts = async () => {
+export const up = async () => {
   try {
-    // Check if products already exist
-    const existingProducts = await Product.findAll();
-    if (existingProducts.length > 0) {
-      console.log('Products already exist, skipping seeding...');
-      return;
-    }
+    // Clear existing products first
+    await Product.destroy({ where: {} });
+    console.log('Cleared existing products...');
 
     // Get the first user (assuming we have at least one user)
     const user = await User.findOne();
@@ -228,5 +225,12 @@ export const seedProducts = async () => {
     console.log('Products seeded successfully!');
   } catch (error) {
     console.error('Error seeding products:', error);
+  }
+};
+
+export const down = async () => {
+  const user = await User.findOne();
+  if (user) {
+    await Product.destroy({ where: { userId: user.id } });
   }
 };
