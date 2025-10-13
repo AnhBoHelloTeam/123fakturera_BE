@@ -5,7 +5,8 @@
      "type": "module",
      "scripts": {
           "start": "node src/index.js",
-          "dev": "nodemon src/index.js"
+          "dev": "nodemon src/index.js",
+          "seed": "node seeders/index.js"
      },
      "dependencies": {
           "@fastify/cors": "^11.1.0",
