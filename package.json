@@ -9,10 +9,12 @@
           "seed": "node seed-database.js",
           "seed:supabase": "node seed-to-supabase.js",
           "seed:legacy": "node seeders/index.js",
+          "test:login": "node test-login.js",
           "push:all": "powershell -ExecutionPolicy Bypass -File push-all.ps1"
      },
      "dependencies": {
           "@fastify/cors": "^11.1.0",
+          "axios": "^1.12.2",
           "bcrypt": "^6.0.0",
           "dotenv": "^16.4.5",
           "fastify": "^5.5.0",

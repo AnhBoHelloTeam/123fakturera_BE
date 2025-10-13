@@ -1,4 +1,5 @@
 import sequelize from '../src/config/db.js';
+import { up as seedUsers, down as unseedUsers } from './users-seeder.js';
 import { up as seedTerms, down as unseedTerms } from './terms-seeder.js';
 import { up as seedProducts, down as unseedProducts } from './products-seeder.js';
 import dotenv from 'dotenv';
@@ -11,6 +12,10 @@ const runSeeders = async () => {
     console.log('Database connection has been established successfully.');
 
     // Run seeders
+    console.log('Running users seeder...');
+    await seedUsers();
+    console.log('Users seeder finished.');
+
     console.log('Running terms seeder...');
     await seedTerms();
     console.log('Terms seeder finished.');
@@ -39,6 +44,10 @@ const revertSeeders = async () => {
     console.log('Reverting terms seeder...');
     await unseedTerms();
     console.log('Terms seeder reverted.');
+
+    console.log('Reverting users seeder...');
+    await unseedUsers();
+    console.log('Users seeder reverted.');
 
     console.log('All seeders reverted successfully.');
   } catch (error) {

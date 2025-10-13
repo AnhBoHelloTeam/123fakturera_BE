@@ -1,4 +1,5 @@
 import sequelize from './src/config/db.js';
+import { up as seedUsers } from './seeders/users-seeder.js';
 import { up as seedTerms } from './seeders/terms-seeder.js';
 import { up as seedProducts } from './seeders/products-seeder.js';
 import dotenv from 'dotenv';
@@ -21,6 +22,11 @@ const seedToSupabase = async () => {
     // Sync database schema
     await sequelize.sync({ alter: true });
     console.log('✅ Database schema synchronized');
+    
+    // Seed users
+    console.log('👥 Seeding users...');
+    await seedUsers();
+    console.log('✅ Users seeded successfully');
     
     // Seed terms
     console.log('📄 Seeding terms...');
