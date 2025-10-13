@@ -28,3 +28,5 @@ services:
 databases:
   - name: 123fakturera-db
     plan: free
+    databaseName: 123fakturera_db
+    user: 123fakturera_user
