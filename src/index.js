@@ -25,6 +25,43 @@ fastify.register(termsRoutes);
 fastify.register(productsRoutes);
 fastify.register(authRoutes);
 
+// Health check endpoint
+fastify.get('/health', async (request, reply) => {
+  try {
+    // Check database connection
+    await sequelize.authenticate();
+    
+    reply.status(200).send({
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      database: 'connected',
+      version: process.env.npm_package_version || '1.0.0'
+    });
+  } catch (error) {
+    reply.status(503).send({
+      status: 'unhealthy',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      database: 'disconnected',
+      error: error.message
+    });
+  }
+});
+
+// Metrics endpoint for Prometheus
+fastify.get('/metrics', async (request, reply) => {
+  const metrics = {
+    http_requests_total: 0,
+    http_request_duration_seconds: 0,
+    nodejs_memory_usage_bytes: process.memoryUsage(),
+    nodejs_cpu_usage_percent: process.cpuUsage(),
+    uptime_seconds: process.uptime()
+  };
+  
+  reply.type('text/plain').send(JSON.stringify(metrics, null, 2));
+});
+
 // Thêm route mặc định cho HEAD request
 fastify.head('/', async (request, reply) => {
   reply.status(200).send();
