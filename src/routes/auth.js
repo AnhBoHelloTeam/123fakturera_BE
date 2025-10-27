@@ -51,34 +51,10 @@ export default async function routes(fastify) {
         email,
         password: hashedPassword,
         verificationToken,
+        isVerified: true, // Auto-verify all users
       });
 
-      // Sửa link để loại bỏ dấu // thừa
-      const verificationLink = `${process.env.BASE_URL}verify?token=${token}`;
-      const mailOptions = {
-        from: '"Nguyễn Thành Nhân" <' + process.env.EMAIL_USER + '>',
-        to: email,
-        subject: 'Välkommen till 123 Fakturera - Bekräfta din e-post',
-        html: `
-          <p>Hej.</p>
-          <p>Kul att du har registrerat dig för att använda 123 Fakturera.</p>
-          <p>Vänligen klicka trên knappen nedan för att bekräfta din e-post:</p>
-          <a href="${verificationLink}" style="display: inline-block; padding: 10px 20px; background-color: #07a31f; color: white; text-decoration: none; border-radius: 5px;">Bekräfta din epost</a>
-          <p>Du kan också klicka trên liên kết này hoặc sao chép và dán vào trình duyệt của bạn:</p>
-          <p><a href="${verificationLink}">${verificationLink}</a></p>
-          <p>Igen, tack för att du registrerade dig och kontakta oss gärna om du behöver hjälp med något.</p>
-          <p><img src="https://storage.123fakturera.se/public/icons/diamond.png" alt="LättFaktura" style="width: 50px;"></p>
-          <p><strong>LättFaktura !</strong></p>
-          <p>Box 2826, 187 28 Täby<br>Telefon: 08-555 00 500<br>Org. Nr: 556651-3734</p>
-          <p style="font-size: 12px; color: #555;">
-            The information contained in this communication is intended solely for the use of the individual or entity to whom it is addressed and others authorized to receive it. It may contain confidential or legally privileged information. If you are not the intended recipient you are hereby notified that any disclosure, copying, distribution or taking any action in reliance on the contents of this information is strictly prohibited and may be unlawful. If you have received this communication in error, please notify us immediately by responding to this email and then delete it from your system. LättFaktura is neither liable for the proper and complete transmission of the information contained in this communication nor for any delay in its receipt. We, LättFaktura Ltd are registered in Ireland, with company registration number 638537. Swedish forwarding contact details are only provided for ease of contact. Vid beställning från oss så kan fakturering och ev. också förmedling komma att ske från K-Soft Sverige AB, Box 2826, 187 28 Täby. Betalning görs då till det företag som fakturan kommer från. Kundförhållandet är dock självklart alltid med oss. För ordningens skull måste vi också skriva att om erbjudande om att köpa program från oss har getts i denna mail så gäller villkoren på Beställningsdelen av vår hemsida, och genom att respondera på denna mail med önskemål om att beställa vår programvara så är sändaren införstådd med att det säljs med villkoren på Beställningsdelen av vår hemsida.
-          </p>
-        `,
-      };
-
-      await transporter.sendMail(mailOptions);
-
-      return reply.code(201).send({ message: 'Registration successful. Please check your email to verify your account.' });
+      return reply.code(201).send({ message: 'Registration successful. You can now login.' });
     } catch (error) {
       console.error(error);
       return reply.code(500).send({ error: 'Internal server error.' });
