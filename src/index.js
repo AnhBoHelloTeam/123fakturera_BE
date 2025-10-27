@@ -24,26 +24,12 @@ const fastify = Fastify({ logger: true });
 
 fastify.decorate('authenticate', authMiddleware);
 
+// Simple CORS configuration
 fastify.register(fastifyCors, {
-  origin: true, // Allow all origins for now
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  credentials: true,
-  preflight: true,
-  optionsSuccessStatus: 200
-});
-
-// Add manual CORS handling for preflight requests
-fastify.addHook('onRequest', async (request, reply) => {
-  reply.header('Access-Control-Allow-Origin', '*');
-  reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, HEAD');
-  reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
-  reply.header('Access-Control-Allow-Credentials', 'true');
-  
-  if (request.method === 'OPTIONS') {
-    reply.status(200).send();
-    return;
-  }
+  origin: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false
 });
 
 fastify.register(pagesRoutes);
