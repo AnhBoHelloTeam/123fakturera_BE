@@ -23,7 +23,12 @@ export default async function routes(fastify) {
     try {
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser) {
-        return reply.code(400).send({ error: 'Email already in use.' });
+        if (existingUser.isVerified) {
+          return reply.code(400).send({ error: 'Email already in use.' });
+        } else {
+          // User exists but not verified, allow re-registration
+          await existingUser.destroy();
+        }
       }
 
       const saltRounds = parseInt(process.env.SALT_ROUNDS) || 10;
