@@ -10,6 +10,7 @@
           "seed:supabase": "node seed-to-supabase.js",
           "seed:legacy": "node seeders/index.js",
           "test:login": "node test-login.js",
+          "sync:db": "node sync-production-db.js",
           "push:all": "powershell -ExecutionPolicy Bypass -File push-all.ps1"
      },
      "dependencies": {

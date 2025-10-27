@@ -11,12 +11,12 @@ import fastifyCors from '@fastify/cors';
 import authMiddleware from './middleware/authMiddleware.js';
 
 // Import all models to ensure they are registered
-import './models/User.js';
-import './models/product.js';
-import './models/term.js';
-import './models/invoice.js';
-import './models/invoiceItem.js';
-import './models/customer.js';
+import User from './models/User.js';
+import Product from './models/product.js';
+import Term from './models/term.js';
+import Invoice from './models/invoice.js';
+import InvoiceItem from './models/invoiceItem.js';
+import Customer from './models/customer.js';
 
 dotenv.config();
 
