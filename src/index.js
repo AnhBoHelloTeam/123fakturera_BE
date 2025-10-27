@@ -5,6 +5,8 @@ import termsRoutes from './routes/terms.js';
 import productsRoutes from './routes/products.js';
 import authRoutes from './routes/auth.js';
 import pagesRoutes from './routes/pages.js';
+import invoicesRoutes from './routes/invoices.js';
+import customersRoutes from './routes/customers.js';
 import fastifyCors from '@fastify/cors';
 import authMiddleware from './middleware/authMiddleware.js';
 
@@ -24,6 +26,8 @@ fastify.register(pagesRoutes);
 fastify.register(termsRoutes);
 fastify.register(productsRoutes);
 fastify.register(authRoutes);
+fastify.register(invoicesRoutes);
+fastify.register(customersRoutes);
 
 // Health check endpoint
 fastify.get('/health', async (request, reply) => {
