@@ -3,33 +3,37 @@ import sequelize from '../config/db.js';
 
 const User = sequelize.define('User', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
   },
   companyName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   contactPerson: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   address: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+  },
+  address2: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   postNumber: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   city: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   mobile: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   email: {
     type: DataTypes.STRING,
@@ -43,6 +47,18 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  accountNumber: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  orgNumber: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  homepage: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   isVerified: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
@@ -51,13 +67,9 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  },
 }, {
-  tableName: 'users',
-  timestamps: false,
+  tableName: 'Users',
+  timestamps: true,
 });
 
 export default User;
