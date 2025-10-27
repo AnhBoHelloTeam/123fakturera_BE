@@ -11,7 +11,7 @@ const Invoice = sequelize.define('Invoice', {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Users',
+      model: 'users',
       key: 'id',
     },
   },
@@ -19,7 +19,7 @@ const Invoice = sequelize.define('Invoice', {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: 'Customers',
+      model: 'customers',
       key: 'id',
     },
   },

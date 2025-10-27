@@ -4,15 +4,15 @@ import User from './User.js';
 
 const Product = sequelize.define('Product', {
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
   },
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: User,
+      model: 'users',
       key: 'id',
     },
   },
@@ -51,7 +51,7 @@ const Product = sequelize.define('Product', {
   },
 }, {
   tableName: 'products',
-  timestamps: false,
+  timestamps: true,
 });
 
 Product.belongsTo(User, { foreignKey: 'userId' });
